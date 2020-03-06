@@ -11,3 +11,4 @@ out/
 src/
 tsconfig.json
 webpack.config.js
+.DS_Store
