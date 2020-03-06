@@ -1,14 +1,19 @@
 {
   "name": "i18n-export",
   "displayName": "i18nExport",
+  "publisher": "i18nExport",
   "description": "export i18n json file",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.42.0"
   },
   "categories": [
     "Other"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wowissu/vscode-i18nExport.git"
+  },
   "activationEvents": [
     "onCommand:extension.i18nExport"
   ],
