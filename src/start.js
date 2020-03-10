@@ -6,7 +6,8 @@ const json2xls = require('json2xls');
 const jsonFileRegex = /src\/i18n\/([a-z\-]{2,})\/([a-z]+)\.json$/;
 
 module.exports = function() {
-  const i18nDirPath = path.resolve(vscode.workspace.rootPath, 'src/i18n');
+  const targetPath = vscode.workspace.getConfiguration('i18nExport').get('localesPath');
+  const i18nDirPath = path.resolve(vscode.workspace.rootPath, targetPath);
 
   /**
    * LangEnum = 'en' | 'zh-cn' | 'zh-tw';
@@ -86,10 +87,14 @@ module.exports = function() {
         saveLabel: 'save',
       })
       .then((saveUri) => {
-        fs.writeFileSync(`${saveUri.path}.xls`, xls, 'binary');
+        const savePath = `${saveUri.path}.xls`;
+
+        fs.writeFileSync(savePath, xls, 'binary');
+
+        vscode.window.showInformationMessage(`Done! please check ${savePath}`);
       });
   } catch (err) {
-    console.error(err);
+    vscode.window.showErrorMessage(err.message);
   }
 };
 

@@ -3,7 +3,7 @@
   "displayName": "i18nExport",
   "publisher": "i18nExport",
   "description": "export i18n json file",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "icon": "img/icon-v1.jpg",
   "engines": {
     "vscode": "^1.42.0"
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:wowissu/vscode-i18nExport.git"
+    "url": "https://github.com/wowissu/vscode-i18nExport"
   },
   "activationEvents": [
     "onCommand:extension.i18nExport"
@@ -25,7 +25,17 @@
         "command": "extension.i18nExport",
         "title": "i18n to excel"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "i18nExport",
+      "properties": {
+        "i18nExport.localesPath": {
+          "type": "string",
+          "default": "src/i18n",
+          "description": "Where i18n json files stored."
+        }
+      }
+    }
   },
   "scripts": {
     "lint": "eslint .",
