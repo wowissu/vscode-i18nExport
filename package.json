@@ -3,7 +3,7 @@
   "displayName": "i18nExport",
   "publisher": "i18nExport",
   "description": "export i18n json file",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "icon": "img/icon-v1.jpg",
   "engines": {
     "vscode": "^1.42.0"

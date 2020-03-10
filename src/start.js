@@ -3,11 +3,12 @@ const path = require('path');
 const fs = require('fs');
 const json2xls = require('json2xls');
 
-const jsonFileRegex = /src\/i18n\/([a-z\-]{2,})\/([a-z]+)\.json$/;
-
 module.exports = function() {
   const targetPath = vscode.workspace.getConfiguration('i18nExport').get('localesPath');
   const i18nDirPath = path.resolve(vscode.workspace.rootPath, targetPath);
+  const jsonFileRegex = new RegExp(`${targetPath.replace('/', '\\/')}\/([a-z\-]{2,})\/([a-z]+)\.json$`, 'i');
+
+  console.log(jsonFileRegex.toString());
 
   /**
    * LangEnum = 'en' | 'zh-cn' | 'zh-tw';
@@ -26,6 +27,8 @@ module.exports = function() {
 
       return /\.json$/.test(fullpath);
     });
+
+    console.log(jsonFilesPath);
 
     jsonFilesPath.forEach((jfPath) => {
       const match = jfPath.match(jsonFileRegex);
@@ -46,7 +49,9 @@ module.exports = function() {
       }
     });
 
-    // console.log(langs);
+    if (Object.keys(langs).length === 0) {
+      throw new Error('found nothing.');
+    }
 
     // 轉成 excel 模式
 
@@ -57,7 +62,7 @@ module.exports = function() {
     Object.keys(langs).reduce((acc, lang) => {
       Object.keys(langs[lang]).forEach((k) => {
         keymap[k] = keymap[k] || {};
-        keymap[k][lang] = langs[lang][k];
+        keymap[k][lang] = langs[lang][k] || '';
       });
 
       return acc;
@@ -87,7 +92,7 @@ module.exports = function() {
         saveLabel: 'save',
       })
       .then((saveUri) => {
-        const savePath = `${saveUri.path}.xls`;
+        const savePath = `${saveUri.path}.xlsx`;
 
         fs.writeFileSync(savePath, xls, 'binary');
 
